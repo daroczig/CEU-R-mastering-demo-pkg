@@ -2,11 +2,11 @@ Package: mr
 Type: Package
 Title: Demo R package for the Mastering R class
 Version: 0.1.0
-Author: Gergely <daroczig@rapporter.net>
+Author: Mastering R class at the CEU BA program
 Maintainer: Gergely <daroczig@rapporter.net>
 Description: Demo R package for the Mastering R class.
 License: GPL-2
 Encoding: UTF-8
 LazyData: true
-RoxygenNote: 7.0.2
+RoxygenNote: 7.1.1
 Imports: checkmate, scales
