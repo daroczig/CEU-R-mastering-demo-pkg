@@ -43,6 +43,6 @@ get_bitcoin_price <- function(retried = 0) {
             stop('Gave up')
         }
         Sys.sleep(1 + retried ^ 2)
-        get_bitcoin_price()
+        get_bitcoin_price(retried = retried + 1)
     })
 }
