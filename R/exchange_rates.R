@@ -30,6 +30,7 @@ get_usdeur <- function(retried = 0) {
 #' @importFrom binancer binance_coins_prices
 #' @importFrom logger log_error log_info
 #' @importFrom checkmate assert_number
+#' @import data.table
 get_bitcoin_price <- function(retried = 0) {
     tryCatch({
         btcusdt <- binance_coins_prices()[symbol == 'BTC', usd]
