@@ -31,19 +31,13 @@ get_usdeur <- function(retried = 0) {
 #' @importFrom logger log_error log_info
 #' @importFrom checkmate assert_number
 #' @import data.table
-get_bitcoin_price <- function(retried = 0) {
-    tryCatch({
-        btcusdt <- binance_coins_prices()[symbol == 'BTC', usd]
-        assert_number(btcusdt, lower = 1000)
-        log_info('The current Bitcoin price is ${btcusdt}')
-        btcusdt
-    },
-    error = function(e) {
-        log_error(e$message)
-        if (retried > 3) {
-            stop('Gave up')
-        }
-        Sys.sleep(1 + retried ^ 2)
-        get_bitcoin_price(retried = retried + 1)
-    })
-}
+#' @importFrom purrr insistently
+#' @importFrom memoise memoise
+#' @importFrom cachem cache_mem
+get_bitcoin_price <- memoise(insistently(function() {
+    if (runif(1) > 0.5) stop('sadsada')
+    btcusdt <- binance_coins_prices()[symbol == 'BTC', usd]
+    assert_number(btcusdt, lower = 1000)
+    log_info('The current Bitcoin price is ${btcusdt}')
+    btcusdt
+}, quiet = FALSE), cache = cache_mem(max_age = 5))
