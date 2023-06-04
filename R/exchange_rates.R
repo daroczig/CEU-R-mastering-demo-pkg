@@ -34,10 +34,47 @@ get_usdeur <- function(retried = 0) {
 #' @importFrom purrr insistently
 #' @importFrom memoise memoise
 #' @importFrom cachem cache_mem
-get_bitcoin_price <- memoise(insistently(function() {
-    if (runif(1) > 0.5) stop('sadsada')
-    btcusdt <- binance_coins_prices()[symbol == 'BTC', usd]
-    assert_number(btcusdt, lower = 1000)
-    log_info('The current Bitcoin price is ${btcusdt}')
-    btcusdt
-}, quiet = FALSE), cache = cache_mem(max_age = 5))
+get_bitcoin_price <- memoise(
+    insistently(
+        function() {
+            btcusdt <- binance_coins_prices()[symbol == 'BTC', usd]
+            assert_number(btcusdt, lower = 1000)
+            log_info('The current Bitcoin price is ${btcusdt}')
+            btcusdt
+        },
+        quiet = FALSE),
+    cache = cache_mem(max_age = 5))
+
+
+#' Look up the value of a US Dollar in Euro
+#' @param start_date date
+#' @param end_date date
+#' @return \code{data.table} object with dates and values
+#' @export
+#' @importFrom httr GET content
+#' @importFrom logger log_error log_info
+#' @importFrom checkmate assert_numeric
+#' @importFrom data.table data.table
+#' @importFrom purrr insistently
+#' @importFrom memoise memoise
+get_usdeurs <- memoise(
+    insistently(
+        function(start_date = Sys.Date(), end_date = Sys.Date()) {
+            response <- GET(
+                'https://api.exchangerate.host/timeseries',
+                query = list(
+                    start_date = start_date,
+                    end_date   = end_date,
+                    base       = 'USD',
+                    symbols    = 'EUR'
+                )
+            )
+            exchange_rates <- content(response)$rates
+            usdeur <- data.table(
+                date = as.Date(names(exchange_rates)),
+                usdeur = as.numeric(unlist(exchange_rates)))
+            assert_numeric(usdeur$usdeur, lower = 0.8, upper = 1.2)
+            usdeur
+        }, quiet = FALSE
+    ), cache = cache_mem(max_age = 5)
+)
