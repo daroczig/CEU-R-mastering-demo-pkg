@@ -8,5 +8,8 @@ Description: Demo R package for the Mastering R class.
 License: GPL-2
 Encoding: UTF-8
 LazyData: true
-RoxygenNote: 7.1.1
-Imports: checkmate, scales, data.table
+RoxygenNote: 7.2.3
+Imports: checkmate, scales, data.table, purrr, httr
+Suggests: 
+    testthat (>= 3.0.0)
+Config/testthat/edition: 3

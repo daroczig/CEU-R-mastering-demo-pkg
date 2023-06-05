@@ -4,10 +4,7 @@
 \alias{get_bitcoin_price}
 \title{Look up the current price of a Bitcoin in USD}
 \usage{
-get_bitcoin_price(retried = 0)
-}
-\arguments{
-\item{retried}{number of times the function already failed}
+get_bitcoin_price(...)
 }
 \value{
 number
