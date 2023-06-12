@@ -13,3 +13,4 @@ Imports: checkmate, scales, data.table, purrr, httr
 Suggests: 
     testthat (>= 3.0.0)
 Config/testthat/edition: 3
+URL: https://balintparragi.github.io/CEU-R-mastering-demo-pkg/
