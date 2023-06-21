@@ -9,8 +9,9 @@ License: GPL-2
 Encoding: UTF-8
 LazyData: true
 RoxygenNote: 7.2.3
-Imports: checkmate, scales, data.table, purrr, httr
+Imports: checkmate, scales, data.table, purrr, httr, binancer
 Suggests: 
     testthat (>= 3.0.0)
 Config/testthat/edition: 3
 URL: https://balintparragi.github.io/CEU-R-mastering-demo-pkg/
+Remotes: daroczig/binancer
